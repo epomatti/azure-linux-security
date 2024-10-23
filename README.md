@@ -29,6 +29,9 @@ terraform init
 terraform apply -auto-approve
 ```
 
+Connect to the VM and [mount the data disk][9].
+
+
 ### Protecting local secrets
 
 If storing secrets locally in disk is unavoidable, extra protections should be provisioned.
@@ -116,11 +119,14 @@ chmod 500 /opt/litapp
 
 For advanced protection for the root user, a [custom kernel][4] might have to be written. Modules such as with [SELinux][5] or [AppArmor][6].
 
+#### Encryption
+
+Key Vaults might have [limited capabilities for keys][8].
+
 
 #### Security events monitoring (SIEM)
 
 A SIEM-like approach can be used to monitor these directories that react to user actions that could potentially compromise the secrets.
-
 
 
 [1]: https://learn.microsoft.com/en-us/azure/virtual-machines/disk-encryption-overview
@@ -130,3 +136,5 @@ A SIEM-like approach can be used to monitor these directories that react to user
 [5]: https://blog.siphos.be/2015/07/restricting-even-root-access-to-a-folder/
 [6]: https://debian-handbook.info/browse/stable/sect.apparmor.html
 [7]: https://learn.microsoft.com/en-us/azure/virtual-machines/disks-enable-host-based-encryption-portal?tabs=azure-powershell#prerequisites
+[8]: https://learn.microsoft.com/en-us/azure/key-vault/keys/about-keys
+[9]: https://learn.microsoft.com/en-us/azure/virtual-machines/linux/attach-disk-portal

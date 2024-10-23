@@ -78,7 +78,7 @@ resource "azurerm_virtual_machine_data_disk_attachment" "data" {
   virtual_machine_id = azurerm_linux_virtual_machine.default.id
 
   # TODO: What is this
-  lun = "10"
+  lun = "0"
 
   # TODO: Need to understand this
   caching = "ReadOnly"
