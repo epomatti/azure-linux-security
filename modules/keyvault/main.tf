@@ -31,6 +31,8 @@ resource "azurerm_key_vault_key" "default" {
     "verify",
     "wrapKey",
   ]
+
+  depends_on = [azurerm_key_vault_access_policy.current]
 }
 
 resource "azurerm_disk_encryption_set" "default" {

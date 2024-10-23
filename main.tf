@@ -66,4 +66,6 @@ module "vm" {
 
   encryption_at_host_enabled = var.vm_encryption_at_host_enabled
   disk_encryption_set_id     = module.keyvault.disk_encryption_set_id
+
+  depends_on = [module.keyvault]
 }
