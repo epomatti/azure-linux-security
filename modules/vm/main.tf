@@ -43,9 +43,10 @@ resource "azurerm_linux_virtual_machine" "default" {
   }
 
   os_disk {
-    name                 = "osdisk-linux-${var.workload}"
-    caching              = "ReadOnly"
-    storage_account_type = "StandardSSD_LRS"
+    name                   = "osdisk-linux-${var.workload}"
+    caching                = "ReadOnly"
+    storage_account_type   = "StandardSSD_LRS"
+    disk_encryption_set_id = var.disk_encryption_set_id
   }
 
   source_image_reference {
@@ -80,7 +81,7 @@ resource "azurerm_virtual_machine_data_disk_attachment" "data" {
   lun = "10"
 
   # TODO: Need to understand this
-  caching = "ReadWrite"
+  caching = "ReadOnly"
 
   # TODO: Specifies if Write Accelerator is enabled on the disk. This can only be enabled on Premium_LRS
   write_accelerator_enabled = false

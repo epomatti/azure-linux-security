@@ -11,7 +11,7 @@ keyvault_key_type                 = "RSA-HSM"
 keyvault_key_size                 = 4096
 
 # Application VM
-vm_size                       = "Standard_B2als_v2"
+vm_size                       = "Standard_B2ats_v2"
 vm_username                   = "azureuser"
 vm_public_key_path            = "keys/temp_rsa.pub"
 vm_encryption_at_host_enabled = true
