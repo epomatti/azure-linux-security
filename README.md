@@ -10,7 +10,7 @@ Set your public IP address in the `allowed_source_address_prefixes` variable usi
 
 ```sh
 # allowed_source_address_prefixes = ["1.2.3.4/32"]
-curl ipinfo.io/ip
+curl ifconfig.io/ip
 ```
 
 Create a temporary key for the Virtual Machine:
@@ -28,13 +28,25 @@ terraform apply -auto-approve
 
 ### Protecting local secrets
 
-If storing secrets locally in disk is unavoidable, extra protections shoud be provisioned.
+If storing secrets locally in disk is unavoidable, extra protections should be provisioned.
 
-- Tunneling
-- Restrict origin addresses (IP, SNI)
+- Tunneling from the origin to destination
+- Restrict origin addresses at the destination (IP, SNI)
+- Proper file permissions setup
+- Strong admin user access control
 - Disk encryption
-- 
 
+Complex approaches:
+
+- Use a custom kernel module to change root access permissions (SELinux, AppArmor)
+- Security events monitoring (SIEM)
+- Auditing
+
+Other approaches (not as effective, side effects):
+
+- Encrypted locally but with password in the same filesystem (chicken and the egg problem)
+- Create the secret files with a hidden prefix (".")
+- Use a random name for the files
 
 #### Strong disk encryption
 
@@ -43,7 +55,7 @@ There are different options for disk encryption, as in this [article][1]. There 
 <img src=".assets/azure-disk-encryption-comparison.png" />
 
 
-#### Service user with restricted permissions
+#### System user permissions
 
 Following this [threat][2], there are some ways of increasing the security of local secrets.
 
@@ -83,7 +95,7 @@ ssh-keygen -f sample_rsa
 Once the sample key is created, restrict the access to the files to **read only**:
 
 > [!TIP]
-> The `execute` permission is required to 
+> The `execute` permission is required to cd into the directory
 
 ```sh
 chmod 400 /opt/litapp/sample_rsa
@@ -94,9 +106,9 @@ chmod 500 /opt/litapp
 For advanced protection for the root user, a [custom kernel][4] might have to be written. Modules such as with [SELinux][5] or [AppArmor][6].
 
 
-#### Auditing / Monitoring
+#### Security events monitoring (SIEM)
 
-SIEM events can be registered to monitor these directories.
+A SIEM-like approach can be used to monitor these directories that react to user actions that could potentially compromise the secrets.
 
 
 
