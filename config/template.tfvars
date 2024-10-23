@@ -5,9 +5,10 @@ allowed_source_address_prefixes = ["1.2.3.4/32"] # Replace with your IP address
 subscription_id                 = ""
 
 # Key Vault
-keyvault_sku_name = "premium"
-keyvault_key_type = "RSA-HSM"
-keyvault_key_size = 4096
+keyvault_purge_protection_enabled = true
+keyvault_sku_name                 = "premium"
+keyvault_key_type                 = "RSA-HSM"
+keyvault_key_size                 = 4096
 
 # Application VM
 vm_size                       = "Standard_B2als_v2"

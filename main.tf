@@ -39,13 +39,14 @@ module "nsg" {
 }
 
 module "keyvault" {
-  source              = "./modules/keyvault"
-  workload            = local.workload
-  resource_group_name = azurerm_resource_group.default.name
-  location            = azurerm_resource_group.default.location
-  keyvault_sku_name   = var.keyvault_sku_name
-  keyvault_key_type   = var.keyvault_key_type
-  keyvault_key_size   = var.keyvault_key_size
+  source                            = "./modules/keyvault"
+  workload                          = local.workload
+  resource_group_name               = azurerm_resource_group.default.name
+  location                          = azurerm_resource_group.default.location
+  keyvault_purge_protection_enabled = var.keyvault_purge_protection_enabled
+  keyvault_sku_name                 = var.keyvault_sku_name
+  keyvault_key_type                 = var.keyvault_key_type
+  keyvault_key_size                 = var.keyvault_key_size
 }
 
 module "vm" {

@@ -48,6 +48,10 @@ variable "vm_image_version" {
   type = string
 }
 
+variable "keyvault_purge_protection_enabled" {
+  type = bool
+}
+
 variable "keyvault_sku_name" {
   type = string
 }

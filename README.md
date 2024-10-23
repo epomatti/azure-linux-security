@@ -33,6 +33,9 @@ terraform apply -auto-approve
 
 If storing secrets locally in disk is unavoidable, extra protections should be provisioned.
 
+> [!IMPORTANT]
+> When implementing advanced features, check limits and restrictions that might apply
+
 - Tunneling from the origin to destination
 - Restrict origin addresses at the destination (IP, SNI)
 - Proper file permissions setup

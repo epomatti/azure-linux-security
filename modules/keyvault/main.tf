@@ -12,8 +12,10 @@ resource "azurerm_key_vault" "default" {
   tenant_id           = local.current_tenant_id
   sku_name            = var.keyvault_sku_name
 
+  # Must the enabled for disk encryption
+  purge_protection_enabled = var.keyvault_purge_protection_enabled
+
   # These are only required for Azure Disk Encryption (ADE) which are not covered in this project
-  purge_protection_enabled    = false
   enabled_for_disk_encryption = false
 }
 
