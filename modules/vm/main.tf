@@ -68,7 +68,7 @@ resource "azurerm_managed_disk" "data" {
   resource_group_name    = var.resource_group_name
   storage_account_type   = "StandardSSD_LRS"
   create_option          = "Empty"
-  disk_size_gb           = 1
+  disk_size_gb           = 4
   disk_encryption_set_id = var.disk_encryption_set_id
 }
 
