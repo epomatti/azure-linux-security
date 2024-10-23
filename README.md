@@ -25,3 +25,17 @@ Deploy the resources:
 terraform init
 terraform apply -auto-approve
 ```
+
+### Protecting local secrets
+
+If storing secrets locally in disk is unavoidable, extra protections shoud be provisioned.
+
+#### Strong disk encryption
+
+There are different options for disk encryption, as in this [article][1]. There is a comparison table as well.
+
+<img src=".assets/azure-disk-encryption-comparison.png" />
+
+
+
+[1]: https://learn.microsoft.com/en-us/azure/virtual-machines/disk-encryption-overview
