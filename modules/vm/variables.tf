@@ -26,6 +26,10 @@ variable "public_key_path" {
   type = string
 }
 
+variable "encryption_at_host_enabled" {
+  type = bool
+}
+
 variable "image_publisher" {
   type = string
 }
@@ -39,5 +43,9 @@ variable "image_sku" {
 }
 
 variable "image_version" {
+  type = string
+}
+
+variable "disk_encryption_set_id" {
   type = string
 }

@@ -1,4 +1,7 @@
-# linux-security
+# Azure Linux security
+
+> [!NOTE]
+> Make sure you enable [host-based encryption][7] in the subscription before you start
 
 Generate the `.auto.tfvars` from the [template](config/template.tfvars):
 
@@ -34,7 +37,9 @@ If storing secrets locally in disk is unavoidable, extra protections should be p
 - Restrict origin addresses at the destination (IP, SNI)
 - Proper file permissions setup
 - Strong admin user access control
-- Disk encryption
+- Disk encryption with customer-managed key (CMK)
+- Platform-specific encryption technology (Azure Encryption-at-Host, ADE)
+- Use HSM
 
 Complex approaches:
 
@@ -98,8 +103,11 @@ Once the sample key is created, restrict the access to the files to **read only*
 > The `execute` permission is required to cd into the directory
 
 ```sh
+# Owner read-only to files
 chmod 400 /opt/litapp/sample_rsa
 chmod 400 /opt/litapp/sample_rsa.pub
+
+# Owner read and execute for the directory
 chmod 500 /opt/litapp
 ```
 
@@ -118,3 +126,4 @@ A SIEM-like approach can be used to monitor these directories that react to user
 [4]: https://stackoverflow.com/a/59559335/3231778
 [5]: https://blog.siphos.be/2015/07/restricting-even-root-access-to-a-folder/
 [6]: https://debian-handbook.info/browse/stable/sect.apparmor.html
+[7]: https://learn.microsoft.com/en-us/azure/virtual-machines/disks-enable-host-based-encryption-portal?tabs=azure-powershell#prerequisites
