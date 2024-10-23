@@ -31,6 +31,9 @@ terraform apply -auto-approve
 
 Connect to the VM and [mount the data disk][9].
 
+> [!IMPORTANT]
+> Make sure mount is persistent after reboots
+
 
 ### Protecting local secrets
 
@@ -122,7 +125,6 @@ For advanced protection for the root user, a [custom kernel][4] might have to be
 #### Encryption
 
 Key Vaults might have [limited capabilities for keys][8].
-
 
 #### Security events monitoring (SIEM)
 
