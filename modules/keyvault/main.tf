@@ -17,6 +17,15 @@ resource "azurerm_key_vault" "default" {
 
   # These are only required for Azure Disk Encryption (ADE) which are not covered in this project
   enabled_for_disk_encryption = false
+
+  # Further controlled by network_acls below
+  public_network_access_enabled = true
+
+  network_acls {
+    default_action = "Deny"
+    ip_rules       = var.allowed_source_address_prefixes
+    bypass         = "AzureServices"
+  }
 }
 
 resource "azurerm_key_vault_key" "default" {

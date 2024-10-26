@@ -2,7 +2,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "4.6.0"
+      version = "4.7.0"
     }
   }
 }
@@ -47,6 +47,16 @@ module "keyvault" {
   keyvault_sku_name                 = var.keyvault_sku_name
   keyvault_key_type                 = var.keyvault_key_type
   keyvault_key_size                 = var.keyvault_key_size
+  allowed_source_address_prefixes   = var.allowed_source_address_prefixes
+}
+
+module "private_link" {
+  source                      = "./modules/private-link"
+  resource_group_name         = azurerm_resource_group.default.name
+  location                    = azurerm_resource_group.default.location
+  private_endpoints_subnet_id = module.vnet.private_endpoints_subnet_id
+  vnet_id                     = module.vnet.vnet_id
+  keyvault_id                 = module.keyvault.id
 }
 
 module "vm" {
@@ -68,5 +78,5 @@ module "vm" {
   encryption_at_host_enabled = var.vm_encryption_at_host_enabled
   disk_encryption_set_id     = module.keyvault.disk_encryption_set_id
 
-  depends_on = [module.keyvault]
+  depends_on = [module.keyvault, module.private_link]
 }

@@ -25,3 +25,7 @@ variable "keyvault_key_type" {
 variable "keyvault_key_size" {
   type = number
 }
+
+variable "allowed_source_address_prefixes" {
+  type = list(string)
+}
