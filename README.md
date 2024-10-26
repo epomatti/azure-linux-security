@@ -126,6 +126,9 @@ For advanced protection for the root user, a [custom kernel][4] might have to be
 
 Key Vaults might have [limited capabilities for keys][8].
 
+> [!IMPORTANT]
+> This project uses a Key Vault with Private Link to test CMK scenarios (in case there are network restrictions)
+
 #### Security events monitoring (SIEM)
 
 A SIEM-like approach can be used to monitor these directories that react to user actions that could potentially compromise the secrets.
