@@ -34,60 +34,6 @@ Connect to the VM and [mount the data disk][9].
 > [!IMPORTANT]
 > Make sure mount is persistent after reboots
 
-## Create Privileged User
-
-Createt the user:
-
-```sh
-sudo adduser newusername
-sudo usermod -aG sudo newusername
-```
-
-Verify:
-
-```sh
-groups newusername
-su - newusername
-sudo whoami
-```
-
-While logged in with the "newusername", set the SSH authentication key:
-
-```sh
-# On your server (logged as an existing sudo user):
-sudo mkdir -p /home/newusername/.ssh
-sudo nano /home/newusername/.ssh/authorized_keys
-```
-
-Alternatively, change the ownership afterwards:
-
-```sh
-sudo chown -R newusername:newusername /home/newusername/.ssh
-sudo chmod 700 /home/newusername/.ssh
-sudo chmod 600 /home/newusername/.ssh/authorized_keys
-```
-
-### Password Logins
-
-Edit the SSH config:
-
-```sh
-sudo nano /etc/ssh/sshd_config
-```
-
-Enable password authentication:
-
-```
-PasswordAuthentication yes
-```
-
-Restart the service:
-
-```sh
-sudo systemctl restart ssh
-```
-
-
 ## Protecting local secrets
 
 If storing secrets locally in disk is unavoidable, extra protections should be provisioned.
@@ -186,6 +132,147 @@ Key Vaults might have [limited capabilities for keys][8].
 
 A SIEM-like approach can be used to monitor these directories that react to user actions that could potentially compromise the secrets.
 
+## Create Privileged User
+
+### Root Access
+
+Createt the user:
+
+```sh
+sudo adduser newusername
+sudo usermod -aG sudo newusername
+```
+
+Verify:
+
+```sh
+groups newusername
+su - newusername
+sudo whoami
+```
+
+While logged in with the "newusername", set the SSH authentication key:
+
+```sh
+# On your server (logged as an existing sudo user):
+sudo mkdir -p /home/newusername/.ssh
+sudo nano /home/newusername/.ssh/authorized_keys
+```
+
+Alternatively, change the ownership afterwards:
+
+```sh
+sudo chown -R newusername:newusername /home/newusername/.ssh
+sudo chmod 700 /home/newusername/.ssh
+sudo chmod 600 /home/newusername/.ssh/authorized_keys
+```
+
+### Password Logins
+
+Edit the SSH config:
+
+```sh
+sudo nano /etc/ssh/sshd_config
+```
+
+Enable password authentication:
+
+```
+PasswordAuthentication yes
+```
+
+Restart the service:
+
+```sh
+sudo systemctl restart ssh
+```
+
+## Restricted Linux Administrator
+
+This section main reference is Digital Oceans's guide on the [sudoers file][digitalocean-suduoers].
+
+### Create User and Group
+
+The user `linda` will be configured with limited privileges.
+
+Create a standard user:
+
+```sh
+sudo adduser linda
+```
+
+Create the group on which to manage permissions:
+
+```sh
+sudo groupadd developers
+sudo usermod -a -G developers linda
+```
+
+Grant SSH access to the user:
+
+```sh
+# Logged as "linda"
+sudo su - linda
+mkdir -p /home/linda/.ssh
+nano /home/linda/.ssh/authorized_keys
+```
+
+### Pre-Check
+
+Verify the current permissions state:
+
+```sh
+# Confirm current privileges
+id && groups && sudo -l
+
+# Validate sudo policy health
+sudo visudo -c || echo "Sudoers has errors — use console or pkexec visudo to repair."
+
+# Verify absolute paths for commands you intend to allow (rules match full paths)
+command -v systemctl
+```
+
+### Create Policy Fragment
+
+Edit a policy fragment:
+
+```sh
+# Edit or create a fragment safely
+sudo visudo -f /etc/sudoers.d/99-developers
+```
+
+Create Least-Privilege Rules (Scoped Access)
+
+
+```toml
+# Allow developers group to run apt commands
+%developers ALL=(ALL) /usr/bin/apt-get, /usr/bin/apt, /usr/bin/apt-cache, /usr/bin/dpkg
+
+# Allow developers group to mount/unmount with VeraCrypt
+%developers ALL=(ALL) NOPASSWD: /usr/bin/veracrypt
+```
+
+Apply the correct permission:
+
+```sh
+sudo chown root:root /etc/sudoers.d/99-developers
+sudo chmod 0440 /etc/sudoers.d/99-developers
+```
+
+### Aliases
+
+It's also possible to use aliases:
+
+```toml
+# /etc/sudoers.d/webops (edit with visudo -f)
+# Command alias for power actions
+Cmnd_Alias POWER = /sbin/shutdown, /sbin/halt, /sbin/reboot
+
+# Users allowed to run POWER
+User_Alias  GROUPTWO = brent, doris, eric
+GROUPTWO ALL = POWER
+```
+
 
 [1]: https://learn.microsoft.com/en-us/azure/virtual-machines/disk-encryption-overview
 [2]: https://superuser.com/questions/77617/how-can-i-create-a-non-login-user
@@ -196,3 +283,4 @@ A SIEM-like approach can be used to monitor these directories that react to user
 [7]: https://learn.microsoft.com/en-us/azure/virtual-machines/disks-enable-host-based-encryption-portal?tabs=azure-powershell#prerequisites
 [8]: https://learn.microsoft.com/en-us/azure/key-vault/keys/about-keys
 [9]: https://learn.microsoft.com/en-us/azure/virtual-machines/linux/attach-disk-portal
+[digitalocean-suduoers]: https://www.digitalocean.com/community/tutorials/how-to-edit-the-sudoers-file
