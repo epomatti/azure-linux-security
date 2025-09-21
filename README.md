@@ -36,6 +36,52 @@ Connect to the VM and [mount the data disk][9].
 
 ## Create Privileged User
 
+Createt the user:
+
+```sh
+sudo adduser newusername
+sudo usermod -aG sudo newusername
+```
+
+Verify:
+
+```sh
+groups newusername
+su - newusername
+sudo whoami
+```
+
+Set the SSH authentication key:
+
+```sh
+# On your server (logged as an existing sudo user):
+sudo mkdir -p /home/newusername/.ssh
+sudo nano /home/newusername/.ssh/authorized_keys
+
+sudo chown -R newusername:newusername /home/newusername/.ssh
+sudo chmod 700 /home/newusername/.ssh
+sudo chmod 600 /home/newusername/.ssh/authorized_keys
+```
+
+### Password Logins
+
+Edit the SSH config:
+
+```sh
+sudo nano /etc/ssh/sshd_config
+```
+
+Enable password authentication:
+
+```
+PasswordAuthentication yes
+```
+
+Restart the service:
+
+```sh
+sudo systemctl restart ssh
+```
 
 
 ## Protecting local secrets
