@@ -1,4 +1,4 @@
-# Azure Linux security
+# Azure Linux Security
 
 > [!NOTE]
 > Make sure you enable [host-based encryption][7] in the subscription before you start
@@ -51,13 +51,17 @@ su - newusername
 sudo whoami
 ```
 
-Set the SSH authentication key:
+While logged in with the "newusername", set the SSH authentication key:
 
 ```sh
 # On your server (logged as an existing sudo user):
 sudo mkdir -p /home/newusername/.ssh
 sudo nano /home/newusername/.ssh/authorized_keys
+```
 
+Alternatively, change the ownership afterwards:
+
+```sh
 sudo chown -R newusername:newusername /home/newusername/.ssh
 sudo chmod 700 /home/newusername/.ssh
 sudo chmod 600 /home/newusername/.ssh/authorized_keys
