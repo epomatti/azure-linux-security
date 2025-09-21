@@ -6,7 +6,7 @@
 Generate the `.auto.tfvars` from the [template](config/template.tfvars):
 
 ```sh
-cp config/template.tfvars
+cp config/template.tfvars .auto.tfvars
 ```
 
 Set your public IP address in the `allowed_source_address_prefixes` variable using CIDR notation:
@@ -19,7 +19,7 @@ curl ifconfig.io/ip
 Create a temporary key for the Virtual Machine:
 
 ```sh
-mkdir keys && ssh-keygen -f keys/temp_rsa
+mkdir .keys && ssh-keygen -f .keys/azure
 ```
 
 Deploy the resources:
