@@ -34,8 +34,11 @@ Connect to the VM and [mount the data disk][9].
 > [!IMPORTANT]
 > Make sure mount is persistent after reboots
 
+## Create Privileged User
 
-### Protecting local secrets
+
+
+## Protecting local secrets
 
 If storing secrets locally in disk is unavoidable, extra protections should be provisioned.
 
@@ -62,14 +65,14 @@ Other approaches (not as effective, side effects):
 - Create the secret files with a hidden prefix (".")
 - Use a random name for the files
 
-#### Strong disk encryption
+### Strong disk encryption
 
 There are different options for disk encryption, as in this [article][1]. There is a comparison table as well.
 
 <img src=".assets/azure-disk-encryption-comparison.png" />
 
 
-#### System user permissions
+### System user permissions
 
 Following this [threat][2], there are some ways of increasing the security of local secrets.
 
@@ -122,14 +125,14 @@ chmod 500 /opt/litapp
 
 For advanced protection for the root user, a [custom kernel][4] might have to be written. Modules such as with [SELinux][5] or [AppArmor][6].
 
-#### Encryption
+### Encryption
 
 Key Vaults might have [limited capabilities for keys][8].
 
 > [!IMPORTANT]
 > This project uses a Key Vault with Private Link to test CMK scenarios (in case there are network restrictions)
 
-#### Security events monitoring (SIEM)
+### Security events monitoring (SIEM)
 
 A SIEM-like approach can be used to monitor these directories that react to user actions that could potentially compromise the secrets.
 
