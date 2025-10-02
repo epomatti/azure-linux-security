@@ -232,6 +232,24 @@ sudo visudo -c || echo "Sudoers has errors — use console or pkexec visudo to r
 command -v systemctl
 ```
 
+If required, remove the user from the `sudo` group:
+
+```sh
+sudo deluser username sudo
+```
+
+### Command History
+
+Privileged command execution will be available by default in the `/var/log/auth.log` file.
+
+The following commands can be used to search for commands executed for a specific user:
+
+```sh
+sudo grep 'CWD=/home/username' /var/log/auth.log
+sudo grep 'PWD=/home/username' /var/log/auth.log
+sudo grep "sudo:.*username" /var/log/auth.log
+```
+
 ### Create Policy Fragment
 
 Edit a policy fragment:
@@ -239,6 +257,12 @@ Edit a policy fragment:
 ```sh
 # Edit or create a fragment safely
 sudo visudo -f /etc/sudoers.d/99-developers
+```
+
+Validate the fragement:
+
+```sh
+sudo visudo -cf /etc/sudoers.d/99-developers
 ```
 
 Create Least-Privilege Rules (Scoped Access)
