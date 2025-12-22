@@ -60,8 +60,8 @@ module "private_link" {
   keyvault_id                 = module.keyvault.id
 }
 
-module "vm" {
-  source              = "./modules/vm"
+module "vm1" {
+  source              = "./modules/virtual_machines/vm1"
   workload            = local.workload
   resource_group_name = azurerm_resource_group.default.name
   location            = azurerm_resource_group.default.location
@@ -86,7 +86,7 @@ module "vm" {
 
 module "vm2" {
   count               = var.create_vm2 ? 1 : 0
-  source              = "./modules/vm2"
+  source              = "./modules/virtual_machines/vm2"
   workload            = local.workload
   resource_group_name = azurerm_resource_group.default.name
   location            = azurerm_resource_group.default.location

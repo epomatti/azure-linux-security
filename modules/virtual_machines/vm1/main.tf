@@ -3,14 +3,14 @@ locals {
 }
 
 resource "azurerm_public_ip" "default" {
-  name                = "pip-${var.workload}"
+  name                = "pip-${local.name}"
   resource_group_name = var.resource_group_name
   location            = var.location
   allocation_method   = "Static"
 }
 
 resource "azurerm_network_interface" "default" {
-  name                = "nic-${var.workload}"
+  name                = "nic-${local.name}"
   resource_group_name = var.resource_group_name
   location            = var.location
 
@@ -27,7 +27,7 @@ resource "azurerm_network_interface" "default" {
 }
 
 resource "azurerm_linux_virtual_machine" "default" {
-  name                       = "vm-${var.workload}"
+  name                       = "vm-${local.name}"
   resource_group_name        = var.resource_group_name
   location                   = var.location
   size                       = var.size
@@ -53,7 +53,7 @@ resource "azurerm_linux_virtual_machine" "default" {
   }
 
   os_disk {
-    name                   = "osdisk-linux-${var.workload}"
+    name                   = "osdisk-linux-${local.name}"
     caching                = "ReadOnly"
     storage_account_type   = "StandardSSD_LRS"
     disk_encryption_set_id = var.keyvault_disk_encryption_enabled ? var.disk_encryption_set_id : null
