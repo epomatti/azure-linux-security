@@ -19,3 +19,12 @@ vm_image_publisher            = "Canonical"
 vm_image_offer                = "ubuntu-24_04-lts"
 vm_image_sku                  = "server"
 vm_image_version              = "latest"
+
+# Second VM
+create_vm2          = false
+vm2_size            = "Standard_B2s"
+vm2_username        = "azureuser"
+vm2_image_publisher = "SUSE"
+vm2_image_offer     = "sles-15-sp7"
+vm2_image_sku       = "gen1"
+vm2_image_version   = "latest"

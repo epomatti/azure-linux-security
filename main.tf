@@ -80,3 +80,21 @@ module "vm" {
 
   depends_on = [module.keyvault, module.private_link]
 }
+
+module "vm2" {
+  count               = var.create_vm2 ? 1 : 0
+  source              = "./modules/vm2"
+  workload            = local.workload
+  resource_group_name = azurerm_resource_group.default.name
+  location            = azurerm_resource_group.default.location
+
+  subnet_id       = module.vnet.compute_subnet_id
+  size            = var.vm_size
+  username        = var.vm_username
+  public_key_path = var.vm_public_key_path
+
+  image_publisher = var.vm_image_publisher
+  image_offer     = var.vm_image_offer
+  image_sku       = var.vm_image_sku
+  image_version   = var.vm_image_version
+}

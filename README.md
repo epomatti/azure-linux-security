@@ -297,6 +297,19 @@ User_Alias  GROUPTWO = brent, doris, eric
 GROUPTWO ALL = POWER
 ```
 
+## Images
+
+Sample commands to get updated images:
+
+```sh
+# Canonical
+az vm image list-offers --location eastus2 --publisher Canonical --output table
+az vm image list --location eastus2 --publisher Canonical --offer ubuntu-22_04-lts --sku server --all --output table
+
+# SUSE
+az vm image list --location eastus2 --publisher SUSE --offer sles-15-sp7 --sku gen2 --architecture x64 --all --output table
+```
+
 
 [1]: https://learn.microsoft.com/en-us/azure/virtual-machines/disk-encryption-overview
 [2]: https://superuser.com/questions/77617/how-can-i-create-a-non-login-user

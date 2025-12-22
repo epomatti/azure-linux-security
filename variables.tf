@@ -63,3 +63,32 @@ variable "keyvault_key_type" {
 variable "keyvault_key_size" {
   type = number
 }
+
+### VM2 ###
+variable "create_vm2" {
+  type = bool
+}
+
+variable "vm2_size" {
+  type = string
+}
+
+variable "vm2_username" {
+  type = string
+}
+
+variable "vm2_image_publisher" {
+  type = string
+}
+
+variable "vm2_image_offer" {
+  type = string
+}
+
+variable "vm2_image_sku" {
+  type = string
+}
+
+variable "vm2_image_version" {
+  type = string
+}
