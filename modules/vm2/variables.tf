@@ -41,3 +41,7 @@ variable "image_sku" {
 variable "image_version" {
   type = string
 }
+
+variable "zone" {
+  type = string
+}

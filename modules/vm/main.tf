@@ -34,6 +34,7 @@ resource "azurerm_linux_virtual_machine" "default" {
   admin_username             = var.username
   network_interface_ids      = [azurerm_network_interface.default.id]
   encryption_at_host_enabled = var.encryption_at_host_enabled
+  zone                       = var.zone
 
   vtpm_enabled                                           = true
   secure_boot_enabled                                    = true

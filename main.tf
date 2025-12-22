@@ -13,8 +13,9 @@ resource "random_integer" "generated" {
 }
 
 locals {
-  affix    = random_integer.generated.result
-  workload = "${var.project_name}${local.affix}"
+  affix        = random_integer.generated.result
+  workload     = "${var.project_name}${local.affix}"
+  default_zone = "${var.location}1"
 }
 
 resource "azurerm_resource_group" "default" {
@@ -65,6 +66,7 @@ module "vm" {
   resource_group_name = azurerm_resource_group.default.name
   location            = azurerm_resource_group.default.location
 
+  zone            = local.default_zone
   subnet_id       = module.vnet.compute_subnet_id
   size            = var.vm_size
   username        = var.vm_username
@@ -89,6 +91,7 @@ module "vm2" {
   resource_group_name = azurerm_resource_group.default.name
   location            = azurerm_resource_group.default.location
 
+  zone            = local.default_zone
   subnet_id       = module.vnet.compute_subnet_id
   size            = var.vm_size
   username        = var.vm_username

@@ -24,7 +24,7 @@ terraform init
 terraform apply
 ```
 
-Connect to the VM and [mount the data disk][9]. The script at [scripts/mount.sh](scripts/mount.sh) can be adapted for this.
+Connect to the VM and [mount the data disk][9]. The script at [scripts/mount_new_disk.sh](scripts/mount_new_disk.sh) can be adapted for this.
 
 > [!IMPORTANT]
 > Make sure mount is persistent after reboots
@@ -291,6 +291,17 @@ Cmnd_Alias POWER = /sbin/shutdown, /sbin/halt, /sbin/reboot
 User_Alias  GROUPTWO = brent, doris, eric
 GROUPTWO ALL = POWER
 ```
+
+## Migrate Disks
+
+To execute a disk migration:
+
+1. Create a snapshot of VM1 disk
+2. Create a new disk from the snapshot
+3. Attache the new disk to VM2
+4. Mount the disk
+
+The [scripts/mount_existing_disk.sh](scripts/mount_existing_disk.sh) can be adapted for this.
 
 ## Images
 

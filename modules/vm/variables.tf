@@ -53,3 +53,7 @@ variable "disk_encryption_set_id" {
 variable "keyvault_disk_encryption_enabled" {
   type = bool
 }
+
+variable "zone" {
+  type = string
+}
