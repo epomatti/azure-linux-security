@@ -1,3 +1,7 @@
+locals {
+  name = "${var.workload}-vm1"
+}
+
 resource "azurerm_public_ip" "default" {
   name                = "pip-${var.workload}"
   resource_group_name = var.resource_group_name
@@ -69,7 +73,7 @@ resource "azurerm_linux_virtual_machine" "default" {
 }
 
 resource "azurerm_managed_disk" "data" {
-  name                   = "data"
+  name                   = "datadisk-${local.name}"
   location               = var.location
   resource_group_name    = var.resource_group_name
   storage_account_type   = "StandardSSD_LRS"
