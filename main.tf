@@ -75,8 +75,9 @@ module "vm" {
   image_sku       = var.vm_image_sku
   image_version   = var.vm_image_version
 
-  encryption_at_host_enabled = var.vm_encryption_at_host_enabled
-  disk_encryption_set_id     = module.keyvault.disk_encryption_set_id
+  encryption_at_host_enabled       = var.vm_encryption_at_host_enabled
+  keyvault_disk_encryption_enabled = var.vm_keyvault_disk_encryption_enabled
+  disk_encryption_set_id           = module.keyvault.disk_encryption_set_id
 
   depends_on = [module.keyvault, module.private_link]
 }
