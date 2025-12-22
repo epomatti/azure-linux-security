@@ -81,6 +81,7 @@ resource "azurerm_managed_disk" "data" {
   create_option          = "Empty"
   disk_size_gb           = 4
   disk_encryption_set_id = var.keyvault_disk_encryption_enabled ? var.disk_encryption_set_id : null
+  zone                   = var.zone
 }
 
 resource "azurerm_virtual_machine_data_disk_attachment" "data" {
