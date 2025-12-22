@@ -15,7 +15,7 @@ resource "random_integer" "generated" {
 locals {
   affix        = random_integer.generated.result
   workload     = "${var.project_name}${local.affix}"
-  default_zone = "${var.location}1"
+  default_zone = "1"
 }
 
 resource "azurerm_resource_group" "default" {
