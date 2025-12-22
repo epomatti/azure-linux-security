@@ -10,7 +10,7 @@ keyvault_sku_name                 = "premium"
 keyvault_key_type                 = "RSA-HSM"
 keyvault_key_size                 = 4096
 
-# Application VM
+# VM1
 vm_size                             = "Standard_B2ats_v2"
 vm_username                         = "azureuser"
 vm_public_key_path                  = ".keys/azure.pub"
@@ -21,7 +21,7 @@ vm_image_offer                      = "ubuntu-24_04-lts"
 vm_image_sku                        = "server"
 vm_image_version                    = "latest"
 
-# Second VM
+# VM2
 create_vm2          = false
 vm2_size            = "Standard_B2s"
 vm2_username        = "azureuser"
