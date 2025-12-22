@@ -11,11 +11,6 @@ cp config/template.tfvars .auto.tfvars
 
 Set your public IP address in the `allowed_source_address_prefixes` variable using CIDR notation:
 
-```sh
-# allowed_source_address_prefixes = ["1.2.3.4/32"]
-curl ifconfig.io/ip
-```
-
 Create a temporary key for the Virtual Machine:
 
 ```sh
@@ -26,10 +21,10 @@ Deploy the resources:
 
 ```sh
 terraform init
-terraform apply -auto-approve
+terraform apply
 ```
 
-Connect to the VM and [mount the data disk][9].
+Connect to the VM and [mount the data disk][9]. The script at [scripts/mount.sh](scripts/mount.sh) can be adapted for this.
 
 > [!IMPORTANT]
 > Make sure mount is persistent after reboots
