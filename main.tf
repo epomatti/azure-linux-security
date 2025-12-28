@@ -70,7 +70,7 @@ module "vm1" {
   subnet_id       = module.vnet.compute_subnet_id
   size            = var.vm_size
   username        = var.vm_username
-  public_key_path = var.vm_public_key_path
+  public_key_path = var.public_key_path
 
   image_publisher = var.vm_image_publisher
   image_offer     = var.vm_image_offer
@@ -93,12 +93,12 @@ module "vm2" {
 
   zone            = local.default_zone
   subnet_id       = module.vnet.compute_subnet_id
-  size            = var.vm_size
-  username        = var.vm_username
-  public_key_path = var.vm_public_key_path
+  size            = var.vm2_size
+  username        = var.vm2_username
+  public_key_path = var.public_key_path
 
-  image_publisher = var.vm_image_publisher
-  image_offer     = var.vm_image_offer
-  image_sku       = var.vm_image_sku
-  image_version   = var.vm_image_version
+  image_publisher = var.vm2_image_publisher
+  image_offer     = var.vm2_image_offer
+  image_sku       = var.vm2_image_sku
+  image_version   = var.vm2_image_version
 }

@@ -41,7 +41,7 @@ resource "azurerm_linux_virtual_machine" "default" {
   bypass_platform_safety_checks_on_user_schedule_enabled = true
   patch_mode                                             = "AutomaticByPlatform"
 
-  custom_data = filebase64("${path.module}/custom_data/ubuntu.sh")
+  custom_data = filebase64("${path.module}/custom_data/cloud_init.yaml")
 
   identity {
     type = "SystemAssigned"
@@ -98,13 +98,10 @@ resource "azurerm_managed_disk" "data001" {
 resource "azurerm_virtual_machine_data_disk_attachment" "data000" {
   managed_disk_id    = azurerm_managed_disk.data000.id
   virtual_machine_id = azurerm_linux_virtual_machine.default.id
-
   # TODO: What is this
-  lun = 1
-
+  lun = 0
   # TODO: Need to understand this
   caching = "ReadOnly"
-
   # TODO: Specifies if Write Accelerator is enabled on the disk. This can only be enabled on Premium_LRS
   write_accelerator_enabled = false
 }

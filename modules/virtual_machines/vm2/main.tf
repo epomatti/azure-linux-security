@@ -35,11 +35,6 @@ resource "azurerm_linux_virtual_machine" "default" {
   network_interface_ids = [azurerm_network_interface.default.id]
   zone                  = var.zone
 
-  vtpm_enabled                                           = true
-  secure_boot_enabled                                    = true
-  bypass_platform_safety_checks_on_user_schedule_enabled = true
-  patch_mode                                             = "AutomaticByPlatform"
-
   custom_data = filebase64("${path.module}/custom_data/suse.sh")
 
   identity {

@@ -15,16 +15,17 @@ variable "subscription_id" {
   type = string
 }
 
+### Keys ###
+variable "public_key_path" {
+  type = string
+}
+
 ### Virtual Machine ###
 variable "vm_size" {
   type = string
 }
 
 variable "vm_username" {
-  type = string
-}
-
-variable "vm_public_key_path" {
   type = string
 }
 
