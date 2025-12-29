@@ -40,6 +40,7 @@ module "nsg" {
 }
 
 module "keyvault" {
+  count                             = var.create_keyvault ? 1 : 0
   source                            = "./modules/keyvault"
   workload                          = local.workload
   resource_group_name               = azurerm_resource_group.default.name
@@ -52,12 +53,13 @@ module "keyvault" {
 }
 
 module "private_link" {
-  source                      = "./modules/private-link"
+  count                       = var.create_keyvault ? 1 : 0
+  source                      = "./modules/private_link"
   resource_group_name         = azurerm_resource_group.default.name
   location                    = azurerm_resource_group.default.location
   private_endpoints_subnet_id = module.vnet.private_endpoints_subnet_id
   vnet_id                     = module.vnet.vnet_id
-  keyvault_id                 = module.keyvault.id
+  keyvault_id                 = var.create_keyvault ? module.keyvault.id : null
 }
 
 module "vm1" {
@@ -77,9 +79,8 @@ module "vm1" {
   image_sku       = var.vm_image_sku
   image_version   = var.vm_image_version
 
-  encryption_at_host_enabled       = var.vm_encryption_at_host_enabled
-  keyvault_disk_encryption_enabled = var.vm_keyvault_disk_encryption_enabled
-  disk_encryption_set_id           = module.keyvault.disk_encryption_set_id
+  encryption_at_host_enabled = var.vm_encryption_at_host_enabled
+  disk_encryption_set_id     = var.create_keyvault ? module.keyvault.disk_encryption_set_id : null
 
   depends_on = [module.keyvault, module.private_link]
 }

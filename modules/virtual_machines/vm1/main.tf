@@ -56,7 +56,7 @@ resource "azurerm_linux_virtual_machine" "default" {
     name                   = "osdisk-linux-${local.name}"
     caching                = "ReadOnly"
     storage_account_type   = "StandardSSD_LRS"
-    disk_encryption_set_id = var.keyvault_disk_encryption_enabled ? var.disk_encryption_set_id : null
+    disk_encryption_set_id = var.disk_encryption_set_id
   }
 
   source_image_reference {
@@ -80,7 +80,7 @@ resource "azurerm_managed_disk" "data000" {
   storage_account_type   = "StandardSSD_LRS"
   create_option          = "Empty"
   disk_size_gb           = 4
-  disk_encryption_set_id = var.keyvault_disk_encryption_enabled ? var.disk_encryption_set_id : null
+  disk_encryption_set_id = var.disk_encryption_set_id
   zone                   = var.zone
 }
 
@@ -91,7 +91,7 @@ resource "azurerm_managed_disk" "data001" {
   storage_account_type   = "StandardSSD_LRS"
   create_option          = "Empty"
   disk_size_gb           = 8
-  disk_encryption_set_id = var.keyvault_disk_encryption_enabled ? var.disk_encryption_set_id : null
+  disk_encryption_set_id = var.disk_encryption_set_id
   zone                   = var.zone
 }
 

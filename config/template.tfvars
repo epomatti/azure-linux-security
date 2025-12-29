@@ -5,6 +5,7 @@ allowed_source_address_prefixes = ["1.2.3.4/32"] # Replace with your IP address
 subscription_id                 = ""
 
 # Key Vault
+create_keyvault                   = false
 keyvault_purge_protection_enabled = false
 keyvault_sku_name                 = "premium"
 keyvault_key_type                 = "RSA-HSM"

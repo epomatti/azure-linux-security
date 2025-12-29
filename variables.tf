@@ -49,11 +49,12 @@ variable "vm_image_version" {
   type = string
 }
 
-variable "keyvault_purge_protection_enabled" {
+### Key Vault ###
+variable "create_keyvault" {
   type = bool
 }
 
-variable "vm_keyvault_disk_encryption_enabled" {
+variable "keyvault_purge_protection_enabled" {
   type = bool
 }
 
