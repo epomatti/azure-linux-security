@@ -318,7 +318,57 @@ az vm image list --location eastus2 --publisher SUSE --offer sles-15-sp7 --sku g
 
 ## Rsync
 
+Thil section will implement `rsync` for file synchronization. VM1 will connect to VM2 and pull the data. Both VMs bust have `rsync` installed.
 
+### Initial Verification
+
+Both machines will have `LUN0` mounted on `/data/disk1`. The initialization script will reboot to ensure mount persistence.
+
+Run the following on both machines:
+
+```sh
+# Check cloud-init execution status
+cloud-init status
+
+# Verify that the mount is persistent after the reboot
+echo "hello" > /data/disk1/hello.txt
+
+# Esure rsync is installed and versions are compatible
+rsync --version
+
+# (VM1 only) Verify network connectivity
+telnet <VM2> 22
+```
+
+### Certificate
+
+
+
+Certificate exchange
+
+### Rsync Configuration
+
+```sh
+rsync -r <origin_directory> <user>@<address>:<destination_path>
+```
+
+Options to consider:
+
+- r: recursive
+- v: verbose
+- a: archive (permissions, timestamp, links, etc)
+- z: compress during copy
+- e: specify the remote shell to use (default is SSH)
+- dry-run
+
+Run as a service
+
+Procedure:
+1. Stop all services
+2. Lock all files
+3. Snapshot
+4. Create users and groups on the copy target
+5. Dry run before the cutover
 
 
 [1]: https://learn.microsoft.com/en-us/azure/virtual-machines/disk-encryption-overview

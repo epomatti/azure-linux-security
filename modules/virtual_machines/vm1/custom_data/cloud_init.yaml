@@ -26,8 +26,14 @@ fs_setup:
     partition: auto # TODO: Verify with explicit partition number is better
 
 mounts:
-  - [LABEL=DATA001, /mnt/data001, "ext4", "defaults,nofail", "0", "2"]
+  - [LABEL=DATA001, /data/disk001, "ext4", "defaults,nofail", "0", "2"]
 
 runcmd:
   - [apt-get, autoremove, -y]
   - [apt-get, clean]
+
+power_state:
+  delay: 30
+  mode: reboot
+  message: Rebooting machine
+  condition: test -f /var/tmp/reboot_me

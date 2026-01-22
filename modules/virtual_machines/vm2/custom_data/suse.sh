@@ -27,3 +27,6 @@ UUID=$(blkid /dev/disk/azure/scsi1/lun0 --match-tag UUID --output value)
 echo "UUID=$UUID /data/disk1 ext4 defaults,nofail 0 2" >> /etc/fstab
 systemctl daemon-reload
 mount -a
+
+
+reboot
