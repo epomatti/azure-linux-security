@@ -1,6 +1,6 @@
 # General
 project_name                    = "litware"
-location                        = "eastus2"
+location                        = "brazilsouth"
 allowed_source_address_prefixes = ["1.2.3.4/32"] # Replace with your IP address
 subscription_id                 = ""
 
@@ -16,18 +16,17 @@ keyvault_key_size                 = 4096
 public_key_path = ".keys/azure.pub"
 
 # VM1
-create_vm1                          = false
-vm_size                             = "Standard_B2ats_v2"
-vm_username                         = "azureuser"
-vm_encryption_at_host_enabled       = false
-vm_keyvault_disk_encryption_enabled = false
-vm_image_publisher                  = "Canonical"
-vm_image_offer                      = "ubuntu-22_04-lts"
-vm_image_sku                        = "server"
-vm_image_version                    = "latest"
+create_vm1                    = false
+vm_size                       = "Standard_B2ats_v2"
+vm_username                   = "azureuser"
+vm_encryption_at_host_enabled = false
+vm_image_publisher            = "Canonical"
+vm_image_offer                = "ubuntu-22_04-lts"
+vm_image_sku                  = "server"
+vm_image_version              = "latest"
 
 # VM2
-create_vm2          = true
+create_vm2          = false
 vm2_size            = "Standard_B2ats_v2"
 vm2_username        = "azureuser"
 vm2_image_publisher = "SUSE"
