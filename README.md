@@ -316,6 +316,10 @@ az vm image list --location eastus2 --publisher Canonical --offer ubuntu-22_04-l
 az vm image list --location eastus2 --publisher SUSE --offer sles-15-sp7 --sku gen2 --architecture x64 --all --output table
 ```
 
+## Rsync
+
+
+
 
 [1]: https://learn.microsoft.com/en-us/azure/virtual-machines/disk-encryption-overview
 [2]: https://superuser.com/questions/77617/how-can-i-create-a-non-login-user

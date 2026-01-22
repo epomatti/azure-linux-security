@@ -73,44 +73,44 @@ resource "azurerm_linux_virtual_machine" "default" {
   }
 }
 
-# resource "azurerm_managed_disk" "data000" {
-#   name                   = "datadisk-${local.name}-000"
-#   location               = var.location
-#   resource_group_name    = var.resource_group_name
-#   storage_account_type   = "StandardSSD_LRS"
-#   create_option          = "Empty"
-#   disk_size_gb           = 4
-#   disk_encryption_set_id = var.disk_encryption_set_id
-#   zone                   = var.zone
-# }
+resource "azurerm_managed_disk" "data000" {
+  name                   = "datadisk-${local.name}-000"
+  location               = var.location
+  resource_group_name    = var.resource_group_name
+  storage_account_type   = "StandardSSD_LRS"
+  create_option          = "Empty"
+  disk_size_gb           = 4
+  disk_encryption_set_id = var.disk_encryption_set_id
+  zone                   = var.zone
+}
 
-# resource "azurerm_managed_disk" "data001" {
-#   name                   = "datadisk-${local.name}-001"
-#   location               = var.location
-#   resource_group_name    = var.resource_group_name
-#   storage_account_type   = "StandardSSD_LRS"
-#   create_option          = "Empty"
-#   disk_size_gb           = 8
-#   disk_encryption_set_id = var.disk_encryption_set_id
-#   zone                   = var.zone
-# }
+resource "azurerm_managed_disk" "data001" {
+  name                   = "datadisk-${local.name}-001"
+  location               = var.location
+  resource_group_name    = var.resource_group_name
+  storage_account_type   = "StandardSSD_LRS"
+  create_option          = "Empty"
+  disk_size_gb           = 8
+  disk_encryption_set_id = var.disk_encryption_set_id
+  zone                   = var.zone
+}
 
-# resource "azurerm_virtual_machine_data_disk_attachment" "data000" {
-#   managed_disk_id    = azurerm_managed_disk.data000.id
-#   virtual_machine_id = azurerm_linux_virtual_machine.default.id
-#   # TODO: What is this
-#   lun = 0
-#   # TODO: Need to understand this
-#   caching = "ReadOnly"
-#   # TODO: Specifies if Write Accelerator is enabled on the disk. This can only be enabled on Premium_LRS
-#   write_accelerator_enabled = false
-# }
+resource "azurerm_virtual_machine_data_disk_attachment" "data000" {
+  managed_disk_id    = azurerm_managed_disk.data000.id
+  virtual_machine_id = azurerm_linux_virtual_machine.default.id
+  # TODO: What is this
+  lun = 0
+  # TODO: Need to understand this
+  caching = "ReadOnly"
+  # TODO: Specifies if Write Accelerator is enabled on the disk. This can only be enabled on Premium_LRS
+  write_accelerator_enabled = false
+}
 
-# resource "azurerm_virtual_machine_data_disk_attachment" "data001" {
-#   managed_disk_id    = azurerm_managed_disk.data001.id
-#   virtual_machine_id = azurerm_linux_virtual_machine.default.id
+resource "azurerm_virtual_machine_data_disk_attachment" "data001" {
+  managed_disk_id    = azurerm_managed_disk.data001.id
+  virtual_machine_id = azurerm_linux_virtual_machine.default.id
 
-#   lun                       = 1
-#   caching                   = "ReadOnly"
-#   write_accelerator_enabled = false
-# }
+  lun                       = 1
+  caching                   = "ReadOnly"
+  write_accelerator_enabled = false
+}

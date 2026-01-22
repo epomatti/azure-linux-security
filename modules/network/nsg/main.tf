@@ -19,6 +19,34 @@ resource "azurerm_network_security_rule" "allow_inbound_ssh" {
   network_security_group_name = azurerm_network_security_group.default.name
 }
 
+resource "azurerm_network_security_rule" "deny_all_vnet_inbound" {
+  name                        = "DenyAllVnetInbound"
+  priority                    = 3000
+  direction                   = "Inbound"
+  access                      = "Deny"
+  protocol                    = "*"
+  source_port_range           = "*"
+  destination_port_range      = "*"
+  source_address_prefix       = "VirtualNetwork"
+  destination_address_prefix  = "VirtualNetwork"
+  resource_group_name         = var.resource_group_name
+  network_security_group_name = azurerm_network_security_group.default.name
+}
+
+resource "azurerm_network_security_rule" "deny_all_vnet_outbound" {
+  name                        = "DenyAllVnetOutbound"
+  priority                    = 3000
+  direction                   = "Outbound"
+  access                      = "Deny"
+  protocol                    = "*"
+  source_port_range           = "*"
+  destination_port_range      = "*"
+  source_address_prefix       = "VirtualNetwork"
+  destination_address_prefix  = "VirtualNetwork"
+  resource_group_name         = var.resource_group_name
+  network_security_group_name = azurerm_network_security_group.default.name
+}
+
 resource "azurerm_subnet_network_security_group_association" "compute" {
   subnet_id                 = var.compute_subnet_id
   network_security_group_id = azurerm_network_security_group.default.id

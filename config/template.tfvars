@@ -17,7 +17,7 @@ public_key_path = ".keys/azure.pub"
 
 # VM1
 create_vm1                    = false
-vm_size                       = "Standard_B2ats_v2"
+vm_size                       = "Standard_B2als_v2"
 vm_username                   = "azureuser"
 vm_encryption_at_host_enabled = false
 vm_image_publisher            = "Canonical"
@@ -27,7 +27,7 @@ vm_image_version              = "latest"
 
 # VM2
 create_vm2          = false
-vm2_size            = "Standard_B2ats_v2"
+vm2_size            = "Standard_B2als_v2"
 vm2_username        = "azureuser"
 vm2_image_publisher = "SUSE"
 vm2_image_offer     = "sles-15-sp7"

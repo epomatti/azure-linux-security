@@ -104,3 +104,11 @@ module "vm2" {
   image_sku       = var.vm2_image_sku
   image_version   = var.vm2_image_version
 }
+
+module "nsg_rsync" {
+  source                      = "./modules/network/nsg_rsync"
+  resource_group_name         = azurerm_resource_group.default.name
+  network_security_group_name = module.nsg.network_security_group_name
+  vm1_private_ip_address      = module.vm1[0].private_ip_address
+  vm2_private_ip_address      = module.vm2[0].private_ip_address
+}

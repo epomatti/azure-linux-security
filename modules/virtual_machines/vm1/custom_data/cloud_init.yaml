@@ -1,34 +1,33 @@
 #cloud-config
 
+bootcmd:
+  # Technically not needed, but using it just for fun and reference
+  # TODO: Add a timeout to avoid infinite loop
+  - [ cloud-init-per, once, wait-for-disk, sh, -c, 'until [ -b /dev/disk/azure/scsi1/lun0 ]; do sleep 1; done' ]
+
 package_update: true
 package_upgrade: true
 
 packages:
   - jq
 
-# device_aliases: { data_disk: /dev/nvme1n1 }
+device_aliases: { data_disk: /dev/disk/azure/scsi1/lun0 }
 
-# disk_setup:
-#   data_disk:
-#     table_type: gpt
-#     layout: true
-#     overwrite: true
+disk_setup:
+  data_disk:
+    table_type: gpt
+    layout: true
+    overwrite: false
 
-# fs_setup:
-#   - label: DATA001
-#     filesystem: ext4
-#     device: data_disk
-#     partition: auto
+fs_setup:
+  - label: DATA001
+    filesystem: ext4
+    device: data_disk
+    partition: auto # TODO: Verify with explicit partition number is better
 
-# mounts:
-#   - [LABEL=DATA001, /mnt/data001, "ext4", "defaults,nofail", "0", "2"]
-
-# Sleep
-# bootcmd:
-#   - [ cloud-init-per, once, wait-for-disk, sh, -c, 'until [ -b /dev/nvme1n1 ]; do sleep 1; done' ]
+mounts:
+  - [LABEL=DATA001, /mnt/data001, "ext4", "defaults,nofail", "0", "2"]
 
 runcmd:
   - [apt-get, autoremove, -y]
   - [apt-get, clean]
-# timezone: UTC
-# package_reboot_if_required: true

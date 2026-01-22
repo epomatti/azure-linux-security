@@ -18,3 +18,12 @@ systemctl start docker.service
 dockerComposeVersion=v2.40.3
 curl -SL https://github.com/docker/compose/releases/download/$dockerComposeVersion/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
+
+### Mount ###
+mkfs.ext4 /dev/disk/azure/scsi1/lun0 # superfloppy
+mkdir -p /data/disk1
+#partprobe "${PARTITION}"
+UUID=$(blkid /dev/disk/azure/scsi1/lun0 --match-tag UUID --output value)
+echo "UUID=$UUID /data/disk1 ext4 defaults,nofail 0 2" >> /etc/fstab
+systemctl daemon-reload
+mount -a
