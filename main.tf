@@ -63,6 +63,7 @@ module "private_link" {
 }
 
 module "vm1" {
+  count               = var.create_vm1 ? 1 : 0
   source              = "./modules/virtual_machines/vm1"
   workload            = local.workload
   resource_group_name = azurerm_resource_group.default.name

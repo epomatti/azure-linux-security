@@ -21,6 +21,10 @@ variable "public_key_path" {
 }
 
 ### Virtual Machine ###
+variable "create_vm1" {
+  type = bool
+}
+
 variable "vm_size" {
   type = string
 }

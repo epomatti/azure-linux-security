@@ -10,7 +10,7 @@ sudo mkfs.xfs "${PARTITION}"
 sudo partprobe "${PARTITION}"
 
 sudo mkdir -p "${MOUNT_PATH}"
-sudo mount "${PARTITION}" "/${MOUNT_PATH}"
+sudo mount "${PARTITION}" "${MOUNT_PATH}"
 
 sudo cp /etc/fstab /etc/fstab.bak
 UUID_VAL=$(sudo blkid -s UUID -o value "${PARTITION}")
