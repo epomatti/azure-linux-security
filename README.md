@@ -342,7 +342,30 @@ telnet <VM2> 22
 
 ### Certificate
 
+On the remote server VM2, create the `rsync` user:
 
+```sh
+sudo useradd -m -s /bin/bash rsync-test
+sudo passwd rsync-test
+sudo -u rsync-test mkdir -p /home/rsync-test/.ssh
+sudo -u rsync-test chmod 700 /home/rsync-test/.ssh
+
+# Optionally, lock to rsync
+sudo nano /home/rsync-test/.ssh/authorized_keys
+command="rsync --server --daemon .",no-port-forwarding,no-agent-forwarding,no-pty ssh-ed25519 AAAAC3NzaC1...
+
+# Optionally, lock or disable password
+sudo passwd -l rsync-test
+sudo nano /etc/ssh/sshd_config
+#Match User rsync-test
+#    PasswordAuthentication no
+```
+
+On the local server VM1, create a key pair:
+
+```sh
+ssh-keygen -f rsync
+```
 
 Certificate exchange
 
