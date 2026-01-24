@@ -346,19 +346,14 @@ On the remote server VM2, create the `rsync` user:
 
 ```sh
 sudo useradd -m -s /bin/bash rsync-test
-sudo passwd rsync-test
+# sudo passwd rsync-test
 sudo -u rsync-test mkdir -p /home/rsync-test/.ssh
 sudo -u rsync-test chmod 700 /home/rsync-test/.ssh
+sudo -u rsync-test  touch /home/rsync-test/.ssh/authorized_keys
 
 # Optionally, lock to rsync
 sudo nano /home/rsync-test/.ssh/authorized_keys
 command="rsync --server --daemon .",no-port-forwarding,no-agent-forwarding,no-pty ssh-ed25519 AAAAC3NzaC1...
-
-# Optionally, lock or disable password
-sudo passwd -l rsync-test
-sudo nano /etc/ssh/sshd_config
-#Match User rsync-test
-#    PasswordAuthentication no
 ```
 
 On the local server VM1, create a key pair:
@@ -367,7 +362,17 @@ On the local server VM1, create a key pair:
 ssh-keygen -f rsync
 ```
 
-Certificate exchange
+Copy the public key to the remote server VM2, under user `rsync-test` inside file `.ssh/authorized_keys`.
+
+### Add Keys with Azure CLI
+
+```sh
+az vm user update \
+    --resource-group rg-litware323-workload \
+    --name vm-litware323-vm1 \
+    --username azureuser \
+    --ssh-key-value .keys/azure.pub
+```
 
 ### Rsync Configuration
 

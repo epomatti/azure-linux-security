@@ -19,6 +19,34 @@ resource "azurerm_network_security_rule" "allow_inbound_ssh" {
   network_security_group_name = azurerm_network_security_group.default.name
 }
 
+resource "azurerm_network_security_rule" "allow_inbound_vnet_icmp" {
+  name                        = "AllowInboundVnetICMP"
+  priority                    = 510
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Icmp"
+  source_port_range           = "*"
+  destination_port_range      = "*"
+  source_address_prefix       = "VirtualNetwork"
+  destination_address_prefix  = "VirtualNetwork"
+  resource_group_name         = var.resource_group_name
+  network_security_group_name = azurerm_network_security_group.default.name
+}
+
+resource "azurerm_network_security_rule" "allow_outbound_vnet_icmp" {
+  name                        = "AllowOutboundVnetICMP"
+  priority                    = 510
+  direction                   = "Outbound"
+  access                      = "Allow"
+  protocol                    = "Icmp"
+  source_port_range           = "*"
+  destination_port_range      = "*"
+  source_address_prefix       = "VirtualNetwork"
+  destination_address_prefix  = "VirtualNetwork"
+  resource_group_name         = var.resource_group_name
+  network_security_group_name = azurerm_network_security_group.default.name
+}
+
 resource "azurerm_network_security_rule" "deny_all_vnet_inbound" {
   name                        = "DenyAllVnetInbound"
   priority                    = 3000

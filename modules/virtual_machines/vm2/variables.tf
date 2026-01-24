@@ -45,3 +45,7 @@ variable "image_version" {
 variable "zone" {
   type = string
 }
+
+variable "private_dns_zone_name" {
+  type = string
+}

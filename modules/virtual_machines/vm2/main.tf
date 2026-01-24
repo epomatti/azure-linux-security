@@ -89,3 +89,12 @@ resource "azurerm_virtual_machine_data_disk_attachment" "data" {
   # TODO: Specifies if Write Accelerator is enabled on the disk. This can only be enabled on Premium_LRS
   write_accelerator_enabled = false
 }
+
+### Private DNS ###
+resource "azurerm_private_dns_a_record" "vm2" {
+  name                = "vm2"
+  zone_name           = var.private_dns_zone_name
+  resource_group_name = var.resource_group_name
+  ttl                 = 300
+  records             = [azurerm_linux_virtual_machine.default.private_ip_address]
+}

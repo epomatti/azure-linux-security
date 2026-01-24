@@ -30,6 +30,14 @@ module "vnet" {
   location            = azurerm_resource_group.default.location
 }
 
+module "dns" {
+  source              = "./modules/dns"
+  resource_group_name = azurerm_resource_group.default.name
+  location            = azurerm_resource_group.default.location
+  project_name        = var.project_name
+  vnet_id             = module.vnet.vnet_id
+}
+
 module "nsg" {
   source                          = "./modules/network/nsg"
   workload                        = local.workload
@@ -74,6 +82,7 @@ module "vm1" {
   size            = var.vm_size
   username        = var.vm_username
   public_key_path = var.public_key_path
+  private_dns_zone_name = module.dns.private_dns_zone_name
 
   image_publisher = var.vm_image_publisher
   image_offer     = var.vm_image_offer
@@ -98,6 +107,7 @@ module "vm2" {
   size            = var.vm2_size
   username        = var.vm2_username
   public_key_path = var.public_key_path
+  private_dns_zone_name = module.dns.private_dns_zone_name
 
   image_publisher = var.vm2_image_publisher
   image_offer     = var.vm2_image_offer

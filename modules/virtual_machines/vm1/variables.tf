@@ -53,3 +53,7 @@ variable "disk_encryption_set_id" {
 variable "zone" {
   type = string
 }
+
+variable "private_dns_zone_name" {
+  type = string
+}

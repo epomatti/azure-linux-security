@@ -3,7 +3,7 @@
 zypper refresh
 
 # Azure CLI
-zypper install -y azure-cli
+zypper install -y azure-cli acl
 az extension add --name azure-devops -y
 
 # Docker
@@ -16,7 +16,8 @@ systemctl start docker.service
 # SUSE 12 only supports very old Compose verions in the packages: https://scc.suse.com/packages?name=SUSE%20Linux%20Enterprise%20Server&version=12.5&arch=x86_64&query=docker-compose&module=
 
 dockerComposeVersion=v2.40.3
-curl -SL https://github.com/docker/compose/releases/download/$dockerComposeVersion/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
+architecture=x86_64
+curl -SL "https://github.com/docker/compose/releases/download/$dockerComposeVersion/docker-compose-linux-$architecture" -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 
 ### Mount ###

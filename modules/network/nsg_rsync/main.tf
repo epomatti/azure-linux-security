@@ -4,7 +4,7 @@ resource "azurerm_network_security_rule" "allow_rsync_vm1_to_vm2_outbound" {
   priority                    = 800
   direction                   = "Outbound"
   access                      = "Allow"
-  protocol                    = "*"
+  protocol                    = "Tcp"
   source_port_range           = "*"
   destination_port_range      = "22"
   source_address_prefix       = var.vm1_private_ip_address
