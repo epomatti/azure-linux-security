@@ -364,7 +364,15 @@ ssh-keygen -f rsync
 
 Copy the public key to the remote server VM2, under user `rsync-test` inside file `.ssh/authorized_keys`.
 
-### Add Keys with Azure CLI
+### Connectivity Test
+
+Check the login:
+
+```sh
+ssh -i rsync rsync-test@vm2.litware.internal
+```
+
+### (Optional) Add Keys with Azure CLI
 
 ```sh
 az vm user update \
@@ -374,29 +382,60 @@ az vm user update \
     --ssh-key-value .keys/azure.pub
 ```
 
-### Rsync Configuration
-
-```sh
-rsync -r <origin_directory> <user>@<address>:<destination_path>
-```
-
-Options to consider:
-
-- r: recursive
-- v: verbose
-- a: archive (permissions, timestamp, links, etc)
-- z: compress during copy
-- e: specify the remote shell to use (default is SSH)
-- dry-run
-
-Run as a service
+### Rsync Procedure
 
 Procedure:
+
 1. Stop all services
+3. Create a VM snapshot (entire VM) and/or backup files before copy
 2. Lock all files
-3. Snapshot
 4. Create users and groups on the copy target
 5. Dry run before the cutover
+
+### Execute the Copy
+
+Create the test files on VM2:
+
+```sh
+sudo setfacl -R -m "u:azureuser:rwx" /data/disk1/
+touch /data/disk1/file1.txt /data/disk1/file2.txt /data/disk1/file3.txt
+```
+
+Pull the files from the remote. These are some options to consider:
+
+- `-c` enables checksum-based file comparison, which is more thorough than just comparing file sizes and modification times
+- `-h` human-readable format
+- `-a` archive (permissions, timestamp, links, etc)
+- `-v` verbose
+- `-z` enables compress during file transfer
+- `-P` combiles two switches:
+  - `--partial` keeps partially transferred files
+  - `--progress` shows transfer progress
+- `-r` recursive
+- `-e` specify the remote shell to use (default is SSH)
+- `--dry-run`
+- `--stats` give some file-transfer stats
+
+Grant permissions:
+
+```sh
+# VM2 rsync-test
+sudo setfacl -R -m "u:rsync-test:rx" /data/disk1/
+getfacl /data/disk1/
+
+# VM1 azureuser
+sudo setfacl -R -m "u:azureuser:rwx" /data/disk001/
+getfacl /data/disk001/
+```
+
+Execute the copy:
+
+> [!IMPORTANT]
+> The running user must have necessary privileges to apply the file permissions and ownership. The option `-a` (archive) alone is not enough. Running as `root` might be a good approach.
+
+```sh
+rsync -rchavzP --stats -e 'ssh -i ./rsync' rsync-test@vm2.litware.internal:/data/disk1/ /data/disk001
+```
 
 
 [1]: https://learn.microsoft.com/en-us/azure/virtual-machines/disk-encryption-overview

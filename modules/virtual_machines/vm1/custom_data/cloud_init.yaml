@@ -10,6 +10,7 @@ package_upgrade: true
 
 packages:
   - jq
+  - acl
 
 device_aliases: { data_disk: /dev/disk/azure/scsi1/lun0 }
 
