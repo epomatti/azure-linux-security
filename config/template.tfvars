@@ -30,6 +30,6 @@ create_vm2          = false
 vm2_size            = "Standard_B2als_v2"
 vm2_username        = "azureuser"
 vm2_image_publisher = "SUSE"
-vm2_image_offer     = "sles-15-sp7"
+vm2_image_offer     = "sles-15-sp5"
 vm2_image_sku       = "gen2"
 vm2_image_version   = "latest"

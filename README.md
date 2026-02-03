@@ -434,7 +434,7 @@ Execute the copy:
 > The running user must have necessary privileges to apply the file permissions and ownership. The option `-a` (archive) alone is not enough. Running as `root` might be a good approach.
 
 ```sh
-rsync -rchavzP --stats -e 'ssh -i ./rsync' rsync-test@vm2.litware.internal:/data/disk1/ /data/disk001
+rsync -rchav --stats -e 'ssh -i ./rsync' rsync-test@vm2.litware.internal:/data/disk1/ /data/disk001
 ```
 
 
